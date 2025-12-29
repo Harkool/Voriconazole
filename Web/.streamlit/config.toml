@@ -1,0 +1,16 @@
+[global]
+developmentMode = false
+
+[server]
+headless = true
+port = 8501
+
+[theme]
+primaryColor = "#0d6efd"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f8f9fa"
+textColor = "#262730"
+font = "sans serif"
+
+[deprecation]
+showPyplotGlobalUse = false
