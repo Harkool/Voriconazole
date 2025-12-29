@@ -84,23 +84,23 @@ st.sidebar.subheader("Target Trough Concentration Range")
 target_preset = st.sidebar.radio(
     "Clinical target",
     options=[
-        "Standard (1.0 - 5.5 mg/L)",
+        "Standard (0.5 - 5.0 mg/L)",
         "Conservative (1.0 - 4.0 mg/L)",
         "Prophylaxis (≥0.5 mg/L)",
         "Custom range"
     ]
 )
 
-if target_preset == "Standard (1.0 - 5.5 mg/L)":
-    t_low, t_high = 1.0, 5.5
+if target_preset == "Standard (0.5 - 5.0 mg/L)":
+    t_low, t_high = 0.5, 5.0
 elif target_preset == "Conservative (1.0 - 4.0 mg/L)":
     t_low, t_high = 1.0, 4.0
 elif target_preset == "Prophylaxis (≥0.5 mg/L)":
     t_low, t_high = 0.5, 10.0
 else:  # Custom
     col1, col2 = st.sidebar.columns(2)
-    t_low = col1.number_input("Lower (mg/L)", 0.1, 5.0, 1.0, 0.1, key="custom_low")
-    t_high = col2.number_input("Upper (mg/L)", 1.0, 10.0, 5.5, 0.1, key="custom_high")
+    t_low = col1.number_input("Lower (mg/L)", 0.1, 5.0, 0.5, 0.1, key="custom_low")
+    t_high = col2.number_input("Upper (mg/L)", 1.0, 10.0, 5.0, 0.1, key="custom_high")
 
 # ===============================
 # 4. PK functions
@@ -137,9 +137,9 @@ if st.button("Estimate Concentration & Optimize Dose", type="primary", use_conta
         st.subheader("Predicted Trough Concentration")
         st.metric("Calibrated concentration (mg/L)", f"{calibrated_conc:.3f}")
 
-        if calibrated_conc < 1.0:
+        if calibrated_conc < 0.5:
             st.error("⚠️ Subtherapeutic risk (<1 mg/L) – consider increasing dose + urgent TDM")
-        elif calibrated_conc > 5.5:
+        elif calibrated_conc > 5.0:
             st.error("⚠️ High neurotoxicity risk (>5.5 mg/L) – consider reducing dose + urgent TDM")
         elif calibrated_conc > 4.0:
             st.warning("Elevated (>4 mg/L) – monitor closely for toxicity")
@@ -197,5 +197,5 @@ st.markdown("""
 - **Always verify with therapeutic drug monitoring (TDM)** when available.
 - The final concentration is calibrated against real-world data for improved accuracy.
 - Dose recommendations assume steady-state, maintenance dosing, and linear pharmacokinetics.
-- Common target: **1.0 – 5.5 mg/L** (some centers prefer ≤4.0 mg/L to reduce toxicity risk).
+- Common target: **0.5 – 5.0 mg/L** (some centers prefer ≤4.0 mg/L to reduce toxicity risk).
 """)
