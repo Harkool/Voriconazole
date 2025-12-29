@@ -21,8 +21,8 @@ st.caption(
 # ===============================
 @st.cache_resource
 def load_assets():
-    model_cl = joblib.load("xgb_cl.pkl")
-    calibrator = joblib.load("calibrator_DV.pkl")
+    model_cl = joblib.load("Web/xgb_cl.pkl")
+    calibrator = joblib.load("Web/calibrator_DV.pkl")
     return model_cl, calibrator
 
 model_cl, calibrator = load_assets()
