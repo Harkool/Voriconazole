@@ -140,7 +140,7 @@ if st.button("Estimate Concentration & Optimize Dose", type="primary", use_conta
         if calibrated_conc < 0.5:
             st.error("⚠️ Subtherapeutic risk (<1 mg/L) – consider increasing dose + urgent TDM")
         elif calibrated_conc > 5.0:
-            st.error("⚠️ High neurotoxicity risk (>5.5 mg/L) – consider reducing dose + urgent TDM")
+            st.error("⚠️ High neurotoxicity risk (>5.0 mg/L) – consider reducing dose + urgent TDM")
         elif calibrated_conc > 4.0:
             st.warning("Elevated (>4 mg/L) – monitor closely for toxicity")
         else:
