@@ -2,6 +2,9 @@
 
 A comprehensive pharmacokinetic (PK) analysis project for voriconazole, incorporating exploratory data analysis (EDA), machine learning modeling, and external validation.
 
+[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## 📊 Project Overview
 
 This project analyzes voriconazole pharmacokinetics with a focus on:
@@ -13,16 +16,13 @@ This project analyzes voriconazole pharmacokinetics with a focus on:
 ## 🗂️ Project Structure
 
 ```
-voriconazole-pk-analysis/
+Voriconazole/
 ├── data/                   # Data files (not included for privacy)
-├── notebooks/              # Jupyter notebooks for analysis
-│   ├── 01_EDA_and_Modeling.ipynb
-│   └── 02_Model_Analysis.ipynb
 ├── src/                    # Source code modules
 │   ├── __init__.py
-│   ├── data_processing.py
-│   ├── modeling.py
-│   └── visualization.py
+│   ├── data_processing.py  # Data preprocessing utilities
+│   ├── modeling.py         # Machine learning models
+│   └── visualization.py    # Plotting functions
 ├── results/                # Model outputs and predictions
 ├── figures/                # Generated plots and visualizations
 ├── docs/                   # Documentation
@@ -55,14 +55,14 @@ voriconazole-pk-analysis/
 
 ### Prerequisites
 - Python 3.8+
-- Jupyter Notebook/Lab
+- pip package manager
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/voriconazole-pk-analysis.git
-cd voriconazole-pk-analysis
+git clone https://github.com/Harkool/Voriconazole.git
+cd Voriconazole
 ```
 
 2. Install dependencies:
@@ -70,9 +70,9 @@ cd voriconazole-pk-analysis
 pip install -r requirements.txt
 ```
 
-3. Launch Jupyter:
+3. Run example analysis:
 ```bash
-jupyter notebook
+python examples/example_workflow.py
 ```
 
 ## 📈 Key Findings
@@ -95,63 +95,93 @@ jupyter notebook
 
 ## 🔧 Dependencies
 
-- pandas
-- numpy
-- matplotlib
-- seaborn
-- scipy
-- scikit-learn
+- pandas >= 1.3.0
+- numpy >= 1.21.0
+- matplotlib >= 3.4.0
+- seaborn >= 0.11.0
+- scipy >= 1.7.0
+- scikit-learn >= 1.0.0
 
 ## 📝 Usage Example
 
 ```python
-import pandas as pd
+from src.data_processing import load_data, encode_genotype, stratify_inflammation
 from src.modeling import train_random_forest
 from src.visualization import plot_predictions
 
-# Load data
-df = pd.read_csv('data/example.csv')
+# Load and prepare data
+df = load_data('data/your_data.csv')
+df = encode_genotype(df)
+df = stratify_inflammation(df, cutoff=100)
 
 # Train model
-model, metrics = train_random_forest(df, target='CL/F')
+feature_cols = ['CYP2C19 genotype', 'CRP', 'Age', 'Weight']
+results = train_random_forest(df[feature_cols], df['CL/F'])
 
 # Visualize results
-plot_predictions(y_true, y_pred)
+plot_predictions(
+    results['y_test'], 
+    results['y_test_pred'],
+    metrics=results['metrics']['test'],
+    save_path='figures/predictions.png'
+)
+
+# Print performance
+print(f"Test R²: {results['metrics']['test']['R2']:.3f}")
+print(f"Test MAE: {results['metrics']['test']['MAE']:.3f}")
 ```
+
+## 📖 Documentation
+
+- [User Guide](docs/USER_GUIDE.md) - Detailed usage instructions
+- [API Reference](docs/API_REFERENCE.md) - Function documentation
+- [Methodology](docs/METHODOLOGY.md) - Statistical methods
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Authors
+## 👥 Author
 
-- Yehui Zhou - Initial work
+**Liu Hao**
+- Institution: China Pharmaceutical University
+- Email: lenhartkoo@foxmail.com
+- GitHub: [@Harkool](https://github.com/Harkool)
 
 ## 🙏 Acknowledgments
 
+- China Pharmaceutical University
 - Research team members
-- Data providers
 - Open-source community
 
 ## 📮 Contact
 
-For questions or collaboration opportunities, please contact [lenhartkoo@foxmail.com]
+For questions or collaboration opportunities, please contact:
+- Email: lenhartkoo@foxmail.com
+- GitHub Issues: [Report issues](https://github.com/Harkool/Voriconazole/issues)
 
 ## 🔖 Citation
 
 If you use this code or findings in your research, please cite:
 
 ```bibtex
-@misc{voriconazole_pk_analysis,
+@misc{liu2025voriconazole,
   title={Voriconazole Pharmacokinetic Analysis with Machine Learning},
-  author={Yehui Zhou},
-  year={2026},
+  author={Liu, Hao},
+  year={2025},
+  institution={China Pharmaceutical University},
   publisher={GitHub},
-  howpublished={\\url{https://github.com/harkool/Voriconazole}}
+  howpublished={\url{https://github.com/Harkool/Voriconazole}}
 }
 ```
 
